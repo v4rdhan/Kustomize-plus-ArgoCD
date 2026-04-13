@@ -1,0 +1,9 @@
+# Startegic merge patch - Only overrides what's specified here
+# Everything in base/deplyment.yaml is kept as-is
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+spec:
+  replicas: 1       # dev runs a single replica to save resources

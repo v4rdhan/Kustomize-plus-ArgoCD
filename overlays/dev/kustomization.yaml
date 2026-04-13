@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Point to the shared base
+resources:
+  - ../../base
+
+# Namespace for this environment
+namespace: dev
+
+#Environment-specific labels added on top of base labels
+labels:
+  - pairs:
+      environment: dev
+      app: demo-app
+    includeSelectors: true
+
+# Override the image tag for dev
+images:
+  - name: nginx
+    newTag: "latest"      # dev always tracks latest
+
+# Apply patches (e.g. replica count)
+patches:
+  - target:
+      kind: Deployment
+      name: demo-app
+    path: patch-replicas.yaml
+
+# Add configMap with env-specific config
+configMapGenerator:
+  - name: demo-app-config
+    literals:
+      - ENV=development
+      - LOG_LEVEL=debug
+      - FEATURE_FLAGS=all

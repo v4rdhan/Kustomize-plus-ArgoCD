@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Deployment
+
+bases:
+  - ../../base
+
+namespace: staging
+
+commonLabels:
+  env: staging
+
+images:
+  - name: nginx
+    newTag: "1.25"      # staging uses a pinned release condidate
+
+patches:
+  - path: patch-replicas.yaml
+
+configMapGenerator:
+  - name: demp-app-config
+    literals:
+      - ENV=staging
+      - LOG_LEVEL=info
+      - FEATURE_FLAGS=beta

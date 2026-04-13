@@ -1,0 +1,19 @@
+# Prod gets higher resources limits - a second patch on the same Deployemnt.
+# Kustomize merges all patches together intelligently.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+spec:
+  template:
+    spec:
+      containers:
+        - name: demo-app
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
