@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: demo-prod
-  namespace: prod
+  namespace: argocd
   labels:
     env: prod
 spec:
@@ -21,8 +21,8 @@ spec:
   syncPolicy:
     # NOTE: prod uses MANUAL sync - you review before appliyng
     syncOptions:
-      - CreateNamespace: true
+      - CreateNamespace=true
     # Uncomment below to enable auto-sync for prod too
-    # automated:
+    automated:
     #   prune: true
-    #   selfHeal: true
+      selfHeal: true
