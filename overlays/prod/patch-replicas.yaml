@@ -3,4 +3,4 @@ kind: Deployment
 metadata:
   name: demo-app
 spec:
-  replicas: 3         # prod runs 3 replicas for high availability
+  replicas: 2         # prod runs 3 replicas for high availability
