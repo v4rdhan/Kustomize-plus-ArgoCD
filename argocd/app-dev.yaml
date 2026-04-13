@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-dev
+  namespace: argocd
+  labels:
+    env: dev
+spec:
+  project: default
+
+  # --- SOURCE: Where is the desired state? ---
+  source:
+    # CHANGE THIS to your own Git repo URL after pushing the project
+    repoURL: https://github.com/v4rdhan/Kustomize-plus-ArgoCD.git
+    targetRevision: HEAD        # track the main branch
+    path: overlays/dev
+
+  # --- DESTINATION: Where to deploy? ---
+  destination: 
+    server: https://kubernetes.default.svc    # in-cluster (minikube)
+    namespace: dev
+
+  # --- SYNC POLICY ---
+  syncPolicy:
+    automated:
+      prune: true         # delete resources removed from Git
+      selfHeal: true      # revert manual kubectl changes automatically
+    syncOptions:
+      - CreateNamespace=true  # auto-create the namespace if missing
