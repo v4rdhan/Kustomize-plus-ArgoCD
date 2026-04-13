@@ -7,7 +7,7 @@ kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
 
 echo "==> Installing Argo CD (stable release)..."
 kubectl apply -n argocd -f \
-    https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifest/install.yaml
+    https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 echo "==> Wating for Argo CD server to be ready (this takes ~2 min)..."
 kubectl rollout status deployment/argocd-server -n argocd --timeout=180s
